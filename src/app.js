@@ -3,18 +3,12 @@ import morgan from "morgan";
 const app = express();
 //! __DIRNAME PATH
 import path from "path";
-import {
-    fileURLToPath
-} from "url";
-const filename = fileURLToPath(
-    import.meta.url);
+import { fileURLToPath } from "url";
+const filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filename);
 //! DOTENV
 import * as dotenv from "dotenv";
-process.env.NODE_ENV ?
-    dotenv.config(`${__dirname}/.env.${process.env.NODE_ENV}`) :
-    dotenv.config();
-
+process.env.NODE_ENV ? dotenv.config(`${__dirname}/.env.${process.env.NODE_ENV}`)  : dotenv.config();
 //! SETTINGS
 
 app.set("port", process.env.PORT); //! CONFIG port
@@ -27,9 +21,7 @@ app.set("view engine", "ejs");
 
 //! MIDDLEWARES
 
-app.use(express.urlencoded({
-    extended: true
-}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "../public"))); //! STATIC FILES
