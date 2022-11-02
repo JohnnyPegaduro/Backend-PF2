@@ -1,0 +1,46 @@
+import express from "express";
+import morgan from "morgan";
+const app = express();
+//! DOTENV
+import * as dotenv from 'dotenv'
+dotenv.config()
+//! __DIRNAME PATH
+import path from "path";
+import {
+    fileURLToPath
+} from "url";
+const filename = fileURLToPath(
+    import.meta.url);
+const __dirname = path.dirname(filename);
+
+//! SETTINGS
+
+app.set("port", process.env.PORT); //! CONFIG port
+app.set("json spaces", 2); //! JSON formatter
+
+//! VIEW ENGINES
+
+app.set("views", path.join(__dirname, "./views"));
+app.set("view engine", "ejs");
+
+//! MIDDLEWARES
+
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(express.json());
+app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, "../public"))); //! STATIC FILES
+
+//! ROUTES
+
+import indexRoute from "./routes/index.routes.js";
+app.use("/", indexRoute); //
+
+//! 404 - Not Found
+
+app.use((req, res) => {
+    res.status(404).render("404");
+});
+
+export default app;
