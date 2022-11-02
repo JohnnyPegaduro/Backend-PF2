@@ -1,13 +1,14 @@
 //! CONTENEDOR /////////////////////////////////
-import Container from "../models/Files Pers/Container.js";
-const contenedor = new Container("src/db/products.json");
+import {
+    DAOProducts
+} from "../daos/index.js";
 //! CONTENEDOR /////////////////////////////////
 const controller = {};
 
 //? DEVUELVE TODOS LOS PRODUCTOS
 
 controller.getAll = async (req, res) => {
-    const data = await contenedor.getAll();
+    const data = await DAOProducts.getAll();
     res.render("products", {
         products: data
     });
@@ -16,7 +17,7 @@ controller.getAll = async (req, res) => {
 //? DEVUELVE UN PRODUCTO SEGÚN SU ID
 
 controller.getById = async (req, res) => {
-    const data = await contenedor.getById(req.params.id);
+    const data = await DAOProducts.getById(req.params.id);
 
     //! Si el id generado no coincide con ningún producto, devuelve null; de lo contrario, envía la información solicitada
     data
@@ -30,7 +31,7 @@ controller.getById = async (req, res) => {
 //? RECIBE Y AGREGA UN PRODUCTO, Y LO DEVUELVE CON SU ID ASIGNADO
 
 controller.post = async (req, res) => {
-    const data = await contenedor.save(req.body);
+    const data = await DAOProducts.save(req.body);
     data == null ?
         res
         .status(500)
@@ -47,7 +48,7 @@ controller.put = async (req, res) => {
         id
     } = req.params;
     const newObject = req.body;
-    const data = await contenedor.update(+id, newObject);
+    const data = await DAOProducts.update(+id, newObject);
 
     data != null ?
         res.status(200).json({
@@ -62,7 +63,7 @@ controller.put = async (req, res) => {
 //? ELIMINA UN PRODUCTO SEGÚN SU ID
 
 controller.delete = async (req, res) => {
-    const data = await contenedor.deleteById(req.params.id);
+    const data = await DAOProducts.deleteById(req.params.id);
     data
         ?
         res.status(200).send({
