@@ -8,7 +8,13 @@ const filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filename);
 //! DOTENV
 import * as dotenv from "dotenv";
-process.env.NODE_ENV ? dotenv.config(`${__dirname}/.env.${process.env.NODE_ENV}`)  : dotenv.config();
+process.env.NODE_ENV
+  ? dotenv.config(`${__dirname}/.env.${process.env.NODE_ENV}`)
+  : dotenv.config();
+
+console.log(process.env.TYPE, "type")
+console.log(process.env.NUM, "num")
+
 //! SETTINGS
 
 app.set("port", process.env.PORT); //! CONFIG port
@@ -34,7 +40,7 @@ app.use("/", indexRoute); //
 //! 404 - Not Found
 
 app.use((req, res) => {
-    res.status(404).render("404");
+  res.status(404).render("404");
 });
 
 export default app;
