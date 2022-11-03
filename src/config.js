@@ -1,7 +1,7 @@
 export default Config = {
     firebase: {},
     mongodb: {
-        url: "mongodb+srv://Felipao:<password>@codercluster.exshfro.mongodb.net/?retryWrites=true&w=majority",
+        url: "mongodb+srv://Johnny:4321@codercluster.t32ywpi.mongodb.net/?retryWrites=true&w=majority",
         options: {
             serverSelectionTimeoutMS: 5000,
         },
