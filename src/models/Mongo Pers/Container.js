@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
-import config from "../config";
+import config from "../../config.js";
 
-await mongoose.connect(config.mongodb.url, config.mongodb.options)
+await mongoose.connect(config.mongodb.url, config.mongodb.options);
 
 export default class Container {
     constructor(coll, schema) {
-        this.db = mongoose.model(coll, schema)
+        this.db = mongoose.model(coll, schema);
         this.date = new Date().toLocaleString();
     }
 
     async save(object) {
         try {
-            await this.db.create(object)
-            return object
+            await this.db.create(object);
+            return object;
         } catch (error) {
             console.error(`Se produjo un error en save:${error}`);
         }
@@ -21,8 +21,10 @@ export default class Container {
     async update(idEntered, object) {
         try {
             await this.db.replaceOne({
-                _id: object._id
-            }, elem)
+                _id: idEntered
+            }, {
+                $set: object
+            });
         } catch (error) {
             console.error(`Se produjo un error en update:${error}`);
         }
@@ -30,8 +32,10 @@ export default class Container {
 
     async getById(idEntered) {
         try {
-            const data = this.db.find({})
-            return data
+            const data = this.db.find({
+                _id: idEntered
+            });
+            return data;
         } catch (error) {
             console.error(`Se produjo un error en getByID: ${error}`);
         }
@@ -39,10 +43,8 @@ export default class Container {
 
     async getAll() {
         try {
-            const data = await this.db.find({}, {
-                _id: 1
-            })
-            return data
+            const data = await this.db.find({});
+            return data;
         } catch (error) {
             console.error(`Se ha producido un error en getAll: ${error}`);
         }
@@ -55,8 +57,8 @@ export default class Container {
                 iDeleted
             } = this.db.deleteOne({
                 _id: idEntered
-            })
-            return iDeleted > 0
+            });
+            return iDeleted > 0;
         } catch (error) {
             console.error(`Se ha producido un error en deleteById: ${error}`);
         }
@@ -64,7 +66,7 @@ export default class Container {
 
     async deleteAll() {
         try {
-            await this.db.deleteMany({})
+            await this.db.deleteMany({});
         } catch (error) {
             console.error(`Se ha producido un error en deleteAll: ${error}`);
         }
