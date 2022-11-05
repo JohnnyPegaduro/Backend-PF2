@@ -8,7 +8,8 @@ class DAOProductsMongo extends MongoContainer {
             thumbnail: String,
             description: String,
             code: String,
-            stock: Number
+            stock: Number,
+            timestamp: String,
         });
     }
 }
