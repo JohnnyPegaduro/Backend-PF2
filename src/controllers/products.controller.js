@@ -48,7 +48,7 @@ controller.put = async (req, res) => {
         id
     } = req.params;
     const newObject = req.body;
-    const data = await DAOProducts.update(+id, newObject);
+    const data = await DAOProducts.update(id, newObject);
 
     data != null ?
         res.status(200).json({
