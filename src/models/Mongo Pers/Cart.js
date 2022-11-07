@@ -75,8 +75,8 @@ export default class Cart {
             }, {
                 $pull: {
                     products: {
-                        _id: idProduct
-                    }
+                        price: 3900
+                    },
                 },
             });
 
